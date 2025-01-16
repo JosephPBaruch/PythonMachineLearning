@@ -1,4 +1,4 @@
-class Solution:
+class BetterSolution:
     def checkDublicates(self, answer: List[List[int]]) -> List[List[int]]:
         cp = answer
         for i in range(len(answer)):
@@ -35,4 +35,36 @@ class Solution:
 
         return answer
 
-   
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()  # Sorting the array to simplify duplicate checks and pair sums
+        answer = []
+        length = len(nums)
+
+        for i in range(length - 2):
+            # Skip duplicate values for the first element
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            target = -nums[i]  # The sum of nums[j] + nums[k] should equal -nums[i]
+            left, right = i + 1, length - 1
+
+            while left < right:
+                current_sum = nums[left] + nums[right]
+                if current_sum == target:
+                    answer.append([nums[i], nums[left], nums[right]])
+
+                    # Skip duplicates for the second and third elements
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+
+                    left += 1
+                    right -= 1
+                elif current_sum < target:
+                    left += 1
+                else:
+                    right -= 1
+
+        return answer
